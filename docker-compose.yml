@@ -1,0 +1,13 @@
+services:
+  feedback-api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: feedback-api-service
+    container_name: feedback-api-service
+    env_file:
+      - .env
+    ports:
+      - ${PORT-3000}:${PORT-3000}
+    restart: unless-stopped
