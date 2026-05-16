@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, Length, IsOptional } from 'class-validator';
 import { type CreateFeedbackData } from '../../../application/factories/create-feedback.factory';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -19,4 +19,9 @@ export class CreateFeedbackDto implements CreateFeedbackData {
   @IsNotEmpty()
   @Length(10, 1000)
   message!: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  recaptchaToken?: string;
 }

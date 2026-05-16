@@ -4,7 +4,9 @@ import { FeedbackEntity } from '../../domain/entities/feedback.entity';
 export type CreateFeedbackData = Pick<
   FeedbackEntity,
   'name' | 'contact' | 'message'
->;
+> & {
+  recaptchaToken?: string;
+};
 
 export function feedbackFactory({
   name,

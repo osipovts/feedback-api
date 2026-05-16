@@ -1,11 +1,18 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+  ApiSecurity,
+} from '@nestjs/swagger';
 import { CreateFeedbackUseCase } from '../../application/use-cases/create-feedback.use-case';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 
 @Controller('feedback')
 @ApiTags('Feedback')
+@ApiSecurity('csrf')
 export class FeedbackController {
   constructor(private readonly createFeedbackUseCase: CreateFeedbackUseCase) {}
 
