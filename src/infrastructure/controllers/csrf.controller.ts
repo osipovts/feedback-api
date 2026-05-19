@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { CsrfService } from '../security/csrf.service';
+import { CsrfService } from '../security/csrf/csrf.service';
 import { ApiResponse } from '@nestjs/swagger';
 import { GetCsrfDto } from './dto/get-csrf.dto';
 

@@ -41,6 +41,7 @@ export class RecaptchaService {
 
       if (!data.success) {
         this.logger.warn('reCAPTCHA verification failed');
+        this.logger.warn(data);
         return false;
       }
 

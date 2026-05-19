@@ -12,6 +12,8 @@ export default () => ({
     recaptcha: {
       siteKey: process.env.RECAPTCHA_SITE_KEY || '',
       secretKey: process.env.RECAPTCHA_SECRET_KEY || '',
+      minScore: Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.5),
+      hostname: process.env.RECAPTCHA_HOSTNAME,
     },
     corsAllowedOrigins: process.env.ALLOWED_ORIGINS?.split(','),
   },

@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import {
   ApiTags,
@@ -9,6 +9,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateFeedbackUseCase } from '../../application/use-cases/create-feedback.use-case';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
+import { RecaptchaGuard } from '../security/recaptcha/recaptcha.guard';
 
 @Controller('feedback')
 @ApiTags('Feedback')
@@ -18,6 +19,7 @@ export class FeedbackController {
 
   @Post()
   @Throttle({})
+  @UseGuards(RecaptchaGuard)
   @ApiOperation({ summary: 'Create new feedback' })
   @ApiBody({ type: () => CreateFeedbackDto })
   @ApiResponse({ status: 201, description: 'Feedback created successfully' })

@@ -9,11 +9,11 @@ import { TelegramService } from './infrastructure/telegram/telegram-service';
 import { CreateFeedbackUseCase } from './application/use-cases/create-feedback.use-case';
 import { RecaptchaService } from './infrastructure/security/recaptcha.service';
 import configuration from './config/configuration';
-import { CsrfMiddleware } from './infrastructure/security/csrf.middleware';
+import { CsrfMiddleware } from './infrastructure/security/csrf/csrf.middleware';
 import { CsrfController } from './infrastructure/controllers/csrf.controller';
 import { join } from 'node:path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { CsrfService } from './infrastructure/security/csrf.service';
+import { CsrfService } from './infrastructure/security/csrf/csrf.service';
 
 @Module({
   imports: [
@@ -54,6 +54,7 @@ import { CsrfService } from './infrastructure/security/csrf.service';
     TelegramService,
     RecaptchaService,
     CsrfService,
+    RecaptchaService,
     CreateFeedbackUseCase,
     Logger,
   ],
