@@ -14,7 +14,6 @@ import { join } from 'node:path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CsrfService } from './infrastructure/security/csrf/csrf.service';
 import { RecaptchaModule } from './infrastructure/security/recaptcha/recaptcha.module';
-import { RecaptchaService } from './infrastructure/security/recaptcha.service';
 
 @Module({
   imports: [
@@ -56,7 +55,6 @@ import { RecaptchaService } from './infrastructure/security/recaptcha.service';
     },
     TelegramService,
     CsrfService,
-    RecaptchaService,
     CreateFeedbackUseCase,
     Logger,
   ],

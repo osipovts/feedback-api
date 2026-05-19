@@ -62,10 +62,9 @@ export class RecaptchaService {
     const data = (await response.json()) as RecaptchaVerifyResponse;
 
     if (!data.success) {
-      this.logger.warn({
-        message: 'reCAPTCHA rejected by Google',
-        errors: data['error-codes'] ?? [],
-      });
+      this.logger.warn(
+        `reCAPTCHA rejected by Google: ${(data['error-codes'] ?? []).join(', ')}`,
+      );
       throw new ForbiddenException('Invalid reCAPTCHA');
     }
 
