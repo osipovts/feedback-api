@@ -10,6 +10,7 @@ import {
 import { CreateFeedbackUseCase } from '../../application/use-cases/create-feedback.use-case';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { RecaptchaGuard } from '../security/recaptcha/recaptcha.guard';
+import { Recaptcha } from '../security/recaptcha/recaptcha.decorator';
 
 @Controller('feedback')
 @ApiTags('Feedback')
@@ -20,6 +21,7 @@ export class FeedbackController {
   @Post()
   @Throttle({})
   @UseGuards(RecaptchaGuard)
+  @Recaptcha({ version: 'v3', expectedAction: 'submit', minScore: 0.5 })
   @ApiOperation({ summary: 'Create new feedback' })
   @ApiBody({ type: () => CreateFeedbackDto })
   @ApiResponse({ status: 201, description: 'Feedback created successfully' })

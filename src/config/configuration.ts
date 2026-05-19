@@ -10,8 +10,12 @@ export default () => ({
     throttleTtl: parseInt(process.env.THROTTLE_TTL || '60', 10),
     throttleLimit: parseInt(process.env.THROTTLE_LIMIT || '5', 10),
     recaptcha: {
-      siteKey: process.env.RECAPTCHA_SITE_KEY || '',
-      secretKey: process.env.RECAPTCHA_SECRET_KEY || '',
+      v2: {
+        secretKey: process.env.RECAPTCHA_V2_SECRET_KEY,
+      },
+      v3: {
+        secretKey: process.env.RECAPTCHA_V3_SECRET_KEY,
+      },
       minScore: Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.5),
       hostname: process.env.RECAPTCHA_HOSTNAME,
     },

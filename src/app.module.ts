@@ -7,13 +7,14 @@ import { FeedbackController } from './infrastructure/controllers/feedback.contro
 import { HealthController } from './infrastructure/controllers/health.controller';
 import { TelegramService } from './infrastructure/telegram/telegram-service';
 import { CreateFeedbackUseCase } from './application/use-cases/create-feedback.use-case';
-import { RecaptchaService } from './infrastructure/security/recaptcha.service';
 import configuration from './config/configuration';
 import { CsrfMiddleware } from './infrastructure/security/csrf/csrf.middleware';
 import { CsrfController } from './infrastructure/controllers/csrf.controller';
 import { join } from 'node:path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { CsrfService } from './infrastructure/security/csrf/csrf.service';
+import { RecaptchaModule } from './infrastructure/security/recaptcha/recaptcha.module';
+import { RecaptchaService } from './infrastructure/security/recaptcha.service';
 
 @Module({
   imports: [
@@ -39,6 +40,8 @@ import { CsrfService } from './infrastructure/security/csrf/csrf.service';
         ],
       }),
     }),
+    // recaptcha
+    RecaptchaModule,
   ],
   controllers: [FeedbackController, HealthController, CsrfController],
   providers: [
@@ -52,7 +55,6 @@ import { CsrfService } from './infrastructure/security/csrf/csrf.service';
         }),
     },
     TelegramService,
-    RecaptchaService,
     CsrfService,
     RecaptchaService,
     CreateFeedbackUseCase,
