@@ -9,10 +9,11 @@ import { TelegramService } from './infrastructure/telegram/telegram-service';
 import { CreateFeedbackUseCase } from './application/use-cases/create-feedback.use-case';
 import { RecaptchaService } from './infrastructure/security/recaptcha.service';
 import configuration from './config/configuration';
-import { CsrfMiddleware } from './csrf.middleware';
+import { CsrfMiddleware } from './infrastructure/security/csrf.middleware';
 import { CsrfController } from './infrastructure/controllers/csrf.controller';
 import { join } from 'node:path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CsrfService } from './infrastructure/security/csrf.service';
 
 @Module({
   imports: [
@@ -52,14 +53,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     },
     TelegramService,
     RecaptchaService,
+    CsrfService,
     CreateFeedbackUseCase,
     Logger,
   ],
 })
 export class AppModule implements NestModule {
   public configure(consumer: MiddlewareConsumer): void {
-    consumer
-      .apply(CsrfMiddleware)
-      .forRoutes(FeedbackController, CsrfController);
+    consumer.apply(CsrfMiddleware).forRoutes(FeedbackController);
   }
 }

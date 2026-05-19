@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware, ForbiddenException } from '@nestjs/common';
 import type { Request, Response, NextFunction } from 'express';
-import { randomBytes, timingSafeEqual } from 'node:crypto';
+import { timingSafeEqual } from 'node:crypto';
 
 type HttpMethod =
   | 'GET'
@@ -37,11 +37,10 @@ const DEFAULT_OPTIONS: Required<CsrfMiddlewareOptions> = {
 export class CsrfMiddleware implements NestMiddleware {
   private readonly options: Required<CsrfMiddlewareOptions> = DEFAULT_OPTIONS;
 
-  public use(req: Request, res: Response, next: NextFunction): void {
+  public use(req: Request, _: Response, next: NextFunction): void {
     const request = req as RequestWithCookies;
 
     if (this.shouldIgnore(request)) {
-      this.ensureTokenExists(request, res);
       next();
 
       return;
@@ -73,23 +72,6 @@ export class CsrfMiddleware implements NestMiddleware {
     return this.options.ignoredPaths.some((path) => req.path.startsWith(path));
   }
 
-  private ensureTokenExists(req: RequestWithCookies, res: Response): void {
-    const existingToken = req.cookies[this.options.cookieName];
-
-    if (existingToken !== undefined) {
-      return;
-    }
-
-    const token = this.generateToken();
-
-    res.cookie(this.options.cookieName, token, {
-      httpOnly: false,
-      secure: true,
-      sameSite: 'none',
-      path: '/',
-    });
-  }
-
   private extractHeaderToken(req: Request): string | undefined {
     const value = req.header(this.options.headerName);
 
@@ -98,10 +80,6 @@ export class CsrfMiddleware implements NestMiddleware {
     }
 
     return value;
-  }
-
-  private generateToken(): string {
-    return randomBytes(this.options.tokenLength).toString('hex');
   }
 
   private compareTokens(left: string, right: string): boolean {
