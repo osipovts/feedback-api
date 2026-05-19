@@ -6,6 +6,7 @@ export type CreateFeedbackData = Pick<
   'name' | 'contact' | 'message'
 > & {
   recaptchaToken?: string;
+  recaptchaVersion?: string;
 };
 
 export function feedbackFactory({
