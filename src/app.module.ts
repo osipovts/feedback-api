@@ -59,8 +59,8 @@ import { RecaptchaModule } from './infrastructure/security/recaptcha/recaptcha.m
     Logger,
   ],
 })
-export class AppModule implements NestModule {
-  public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(CsrfMiddleware).forRoutes(FeedbackController);
-  }
+export class AppModule {
+  // public configure(consumer: MiddlewareConsumer): void {
+  //  consumer.apply(CsrfMiddleware).forRoutes(FeedbackController);
+  //}
 }
